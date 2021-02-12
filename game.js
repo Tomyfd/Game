@@ -9,7 +9,7 @@ var level = 0;
 
 
 
-$("body").one("click", function name() {
+$("body").one("keydown", function name() {
 
 
 
