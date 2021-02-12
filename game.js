@@ -9,7 +9,7 @@ var level = 0;
 
 
 
-$("body").one("keydown", function name() {
+$("body").one("click", function name() {
 
 
 
@@ -20,7 +20,7 @@ $("body").one("keydown", function name() {
 
   gamePatterns1.push(randomChosenColour);
 
-  $("#" + gamePatterns1[0]).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+  $("#" + gamePatterns1[0]).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
 
 
   switch (gamePatterns1[0]) {
@@ -112,139 +112,139 @@ $(".btn").click(function(event) {
 
 
 
-      var userChosenColour = event.target.id;
-      userClickedPattern.push(userChosenColour);
-      playSound(event.target.id);
-      animatePress(event.target);
+  var userChosenColour = event.target.id;
+  userClickedPattern.push(userChosenColour);
+  playSound(event.target.id);
+  animatePress(event.target);
 
 
-      console.log(userClickedPattern);
-      console.log(gamePatterns1);
+  console.log(userClickedPattern);
+  console.log(gamePatterns1);
 
-      console.log(userClickedPattern.length);
-      console.log(gamePatterns1.length);
-
-
-
-
-      if (checkAnswer() == true) {
-
-        console.log("I'm here");
-        var randomNumber = Math.floor(Math.random() * 4);
-
-        var randomChosenColour = buttonColours[randomNumber];
-
-        gamePatterns1.push(randomChosenColour);
-        $("#" + randomChosenColour).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
-
-        userClickedPattern = [];
-        change();
-      }
-
-      if (checkAnswer() == false) {
-
-        userClickedPattern = [];
-        gamePatterns1 = [];
-        $("h1").text("Game over");
-        var audioFail = new Audio("sounds/wrong.mp3");
-        audioFail.loop = false;
-        audioFail.play();
-        $("body").addClass("game-over");
-
-
-        setTimeout(function(){
-                location.reload();
-                return false;
-        },1500);
+  console.log(userClickedPattern.length);
+  console.log(gamePatterns1.length);
 
 
 
 
-      }
+  if (checkAnswer() == true) {
+
+    console.log("I'm here");
+    var randomNumber = Math.floor(Math.random() * 4);
+
+    var randomChosenColour = buttonColours[randomNumber];
+
+    gamePatterns1.push(randomChosenColour);
+    $("#" + randomChosenColour).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+
+    userClickedPattern = [];
+    change();
+  }
+
+  if (checkAnswer() == false) {
+
+    userClickedPattern = [];
+    gamePatterns1 = [];
+    $("h1").text("Game over");
+    var audioFail = new Audio("sounds/wrong.mp3");
+    audioFail.loop = false;
+    audioFail.play();
+    $("body").addClass("game-over");
+
+
+    setTimeout(function() {
+      location.reload();
+      return false;
+    }, 1500);
 
 
 
-      if (inside() == true) {
 
-        console.log("truth");
-      }
-
-      if (inside() == false) {
+  }
 
 
-        userClickedPattern = [];
-        gamePatterns1 = [];
-        $("h1").text("Game over");
-        var audioFail = new Audio("sounds/wrong.mp3");
-        audioFail.loop = false;
-        audioFail.play();
-        $("body").addClass("game-over");
+
+  if (inside() == true) {
+
+    console.log("truth");
+  }
+
+  if (inside() == false) {
 
 
-setTimeout(function(){
-        location.reload();
+    userClickedPattern = [];
+    gamePatterns1 = [];
+    $("h1").text("Game over");
+    var audioFail = new Audio("sounds/wrong.mp3");
+    audioFail.loop = false;
+    audioFail.play();
+    $("body").addClass("game-over");
+
+
+    setTimeout(function() {
+      location.reload();
+      return false;
+    }, 1500);
+
+
+
+
+  }
+});
+
+
+
+
+
+function animatePress(currentColour) {
+
+  $(currentColour).addClass("pressed");
+
+
+  setTimeout(function() {
+    $(currentColour).removeClass("pressed");
+  }, 100);
+
+}
+
+function change() {
+
+  level++;
+  $("h1").text("Level " + level);
+
+}
+
+
+function checkAnswer() {
+
+  var len = gamePatterns1.length;
+
+
+  if (gamePatterns1.length === userClickedPattern.length) {
+
+    for (let i = 0; i < len; i++) {
+      if (gamePatterns1[i] !== userClickedPattern[i]) {
+
         return false;
-},1500);
-
-
-
-
       }
-    });
+    }
+    return true;
+  }
+
+}
 
 
 
 
-
-      function animatePress(currentColour) {
-
-        $(currentColour).addClass("pressed");
-
-
-        setTimeout(function() {
-          $(currentColour).removeClass("pressed");
-        }, 100);
-
-      }
-
-      function change() {
-
-        level++;
-        $("h1").text("Level " + level);
-
-      }
+function inside() {
+  var len = userClickedPattern.length;
+  for (let i = 0; i < len; i++) {
 
 
-      function checkAnswer() {
+    if (gamePatterns1[i] !== userClickedPattern[i]) {
 
-        var len = gamePatterns1.length;
-
-
-        if (gamePatterns1.length === userClickedPattern.length) {
-
-          for (let i = 0; i < len; i++) {
-            if (gamePatterns1[i] !== userClickedPattern[i]) {
-
-              return false;
-            }
-          }
-          return true;
-        }
-
-      }
-
-
-
-
-      function inside() {
-        var len = userClickedPattern.length;
-        for (let i = 0; i < len; i++) {
-
-
-          if (gamePatterns1[i] !== userClickedPattern[i]) {
-
-            return false;
-          }
-        }
-        return true;
-      }
+      return false;
+    }
+  }
+  return true;
+}
